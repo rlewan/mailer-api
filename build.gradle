@@ -29,5 +29,7 @@ dependencies {
   compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
   compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
+  compile 'com.sendgrid:sendgrid-java:4.0.1'
+
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
 }

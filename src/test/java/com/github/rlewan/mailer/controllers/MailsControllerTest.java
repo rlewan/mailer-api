@@ -1,10 +1,12 @@
 package com.github.rlewan.mailer.controllers;
 
+import com.github.rlewan.mailer.emailsenders.SendgridEmailSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +20,9 @@ public class MailsControllerTest {
 
     @Autowired
     private MockMvc webClient;
+
+    @MockBean
+    private SendgridEmailSender sendgridEmailSender;
 
     @Test
     public void sayHelloEndpointShouldRespondWith200ResponseCode() throws Exception {
