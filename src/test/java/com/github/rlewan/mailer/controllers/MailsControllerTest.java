@@ -1,5 +1,6 @@
 package com.github.rlewan.mailer.controllers;
 
+import com.github.rlewan.mailer.emailsenders.MailjetEmailSender;
 import com.github.rlewan.mailer.emailsenders.SendgridEmailSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,8 @@ public class MailsControllerTest {
 
     @MockBean
     private SendgridEmailSender sendgridEmailSender;
+    @MockBean
+    private MailjetEmailSender mailjetEmailSender;
 
     @Test
     public void sayHelloEndpointShouldRespondWith200ResponseCode() throws Exception {
