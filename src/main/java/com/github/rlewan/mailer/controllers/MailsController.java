@@ -2,10 +2,10 @@ package com.github.rlewan.mailer.controllers;
 
 import com.github.rlewan.mailer.emailsenders.EmailSender;
 import com.github.rlewan.mailer.model.SendEmailRequest;
+import com.github.rlewan.mailer.model.SendEmailResponse;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,21 +24,14 @@ public class MailsController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void sendEmail(@RequestBody SendEmailRequest request) {
-        System.out.println(request.getRecipient());
-        System.out.println(request.getSubject());
-        System.out.println(request.getContent());
-    }
-
-    @GetMapping
-    public String sayHello() {
+    public SendEmailResponse sendEmail(@RequestBody SendEmailRequest request) {
         emailSender.sendEmail(
             "rafal_lewandowski@outlook.com",
-            "rlewano@gmail.com",
-            "Testing",
-            "Some text"
+            request.getRecipient(),
+            request.getSubject(),
+            request.getContent()
         );
-        return "Hello, World!";
+        return SendEmailResponse.SUCCESS;
     }
 
 }
