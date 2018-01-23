@@ -7,11 +7,13 @@ import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
+@Qualifier("primaryEmailSender")
 public class SendgridEmailSender implements EmailSender {
 
     @Override

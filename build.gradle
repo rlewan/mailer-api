@@ -25,6 +25,7 @@ repositories {
 def versions = [
   springfoxSwagger: '2.7.0',
   jackson: dependencyManagement.importedProperties['jackson.version'],
+  springCloudHystrix: '1.4.2.RELEASE'
 ]
 
 dependencies {
@@ -39,6 +40,9 @@ dependencies {
 
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+
+  compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: versions.springCloudHystrix
+  compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix-dashboard', version: versions.springCloudHystrix
 
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
 }
