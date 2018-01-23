@@ -1,6 +1,6 @@
 package com.github.rlewan.mailer.controllers;
 
-import com.github.rlewan.mailer.services.EmailService;
+import com.github.rlewan.mailer.services.EmailSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class EmailsControllerIntegrationTest {
     private MockMvc webClient;
 
     @MockBean
-    private EmailService emailService;
+    private EmailSender emailSender;
 
     @Test
     public void sendEmailShouldRespondWith422WhenRequestEntityIsInvalid() throws Exception {

@@ -2,4 +2,4 @@ server:
   port: 4550
 
 mailer:
-  sender: 'rafal_lewandowski@outlook.com'
+  from_address: 'rafal_lewandowski@outlook.com'

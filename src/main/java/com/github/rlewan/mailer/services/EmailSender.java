@@ -10,32 +10,32 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService {
+public class EmailSender {
 
-    private final String sender;
+    private final String fromAddress;
     private final EmailServiceProvider primaryEmailServiceProvider;
     private final EmailServiceProvider secondaryEmailServiceProvider;
 
     @Autowired
-    public EmailService(
-        @Value("${mailer.sender}") String sender,
+    public EmailSender(
+        @Value("${mailer.from_address}") String fromAddress,
         @Qualifier("primaryEmailServiceProvider") EmailServiceProvider primaryEmailServiceProvider,
         @Qualifier("secondaryEmailServiceProvider") EmailServiceProvider secondaryEmailServiceProvider
     ) {
-        this.sender = sender;
+        this.fromAddress = fromAddress;
         this.primaryEmailServiceProvider = primaryEmailServiceProvider;
         this.secondaryEmailServiceProvider = secondaryEmailServiceProvider;
     }
 
     @HystrixCommand(fallbackMethod = "sendEmailUsingSecondarySender")
     public void sendEmail(SendEmailRequest request) {
-        primaryEmailServiceProvider.sendEmail(sender, request.getRecipient(), request.getSubject(), request.getContent());
+        primaryEmailServiceProvider.sendEmail(fromAddress, request.getRecipient(), request.getSubject(), request.getContent());
     }
 
     @SuppressWarnings("unused")
     @HystrixCommand(fallbackMethod = "reportServiceUnavailable")
     public void sendEmailUsingSecondarySender(SendEmailRequest request) {
-        secondaryEmailServiceProvider.sendEmail(sender, request.getRecipient(), request.getSubject(), request.getContent());
+        secondaryEmailServiceProvider.sendEmail(fromAddress, request.getRecipient(), request.getSubject(), request.getContent());
     }
 
     @SuppressWarnings("unused")

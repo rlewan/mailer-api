@@ -1,6 +1,6 @@
 package com.github.rlewan.mailer.controllers;
 
-import com.github.rlewan.mailer.services.EmailService;
+import com.github.rlewan.mailer.services.EmailSender;
 import com.github.rlewan.mailer.model.SendEmailRequest;
 import com.github.rlewan.mailer.model.SendEmailResponse;
 import io.swagger.annotations.Api;
@@ -22,16 +22,16 @@ import javax.validation.Valid;
 )
 public class EmailsController {
 
-    private final EmailService emailService;
+    private final EmailSender emailSender;
 
     @Autowired
-    public EmailsController(EmailService emailService) {
-        this.emailService = emailService;
+    public EmailsController(EmailSender emailSender) {
+        this.emailSender = emailSender;
     }
 
     @PostMapping
     public SendEmailResponse sendEmail(@Valid @RequestBody SendEmailRequest request) {
-        emailService.sendEmail(request);
+        emailSender.sendEmail(request);
         return SendEmailResponse.SUCCESS;
     }
 
