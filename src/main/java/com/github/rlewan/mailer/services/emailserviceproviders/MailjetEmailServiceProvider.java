@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.emailsenders;
+package com.github.rlewan.mailer.services.emailserviceproviders;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-@Qualifier("secondaryEmailSender")
-public class MailjetEmailSender implements EmailSender {
+@Qualifier("secondaryEmailServiceProvider")
+public class MailjetEmailServiceProvider implements EmailServiceProvider {
 
     @Override
     public void sendEmail(String sender, String recipient, String subject, String text) {

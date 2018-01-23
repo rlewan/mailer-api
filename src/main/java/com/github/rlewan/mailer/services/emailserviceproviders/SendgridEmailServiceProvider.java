@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.emailsenders;
+package com.github.rlewan.mailer.services.emailserviceproviders;
 
 import com.sendgrid.Content;
 import com.sendgrid.Email;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-@Qualifier("primaryEmailSender")
-public class SendgridEmailSender implements EmailSender {
+@Qualifier("primaryEmailServiceProvider")
+public class SendgridEmailServiceProvider implements EmailServiceProvider {
 
     @Override
     public void sendEmail(String sender, String recipient, String subject, String text) {
