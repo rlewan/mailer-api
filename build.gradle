@@ -28,16 +28,17 @@ def versions = [
 ]
 
 dependencies {
-  compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
-  compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
-
   compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: versions.jackson
+
+  compile group: 'com.mailjet', name: 'mailjet-client', version: '4.1.1'
+
+  compile group: 'com.sendgrid', name: 'sendgrid-java', version: '4.0.1'
 
   compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
   compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
-  compile 'com.sendgrid:sendgrid-java:4.0.1'
-  compile 'com.mailjet:mailjet-client:4.1.1'
+  compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
+  compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
 
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
 }
