@@ -31,12 +31,7 @@ public class EmailsController {
 
     @PostMapping
     public SendEmailResponse sendEmail(@Valid @RequestBody SendEmailRequest request) {
-        emailService.sendEmail(
-            "rafal_lewandowski@outlook.com",
-            request.getRecipient(),
-            request.getSubject(),
-            request.getContent()
-        );
+        emailService.sendEmail(request);
         return SendEmailResponse.SUCCESS;
     }
 

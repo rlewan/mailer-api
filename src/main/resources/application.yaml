@@ -1,2 +1,5 @@
 server:
   port: 4550
+
+mailer:
+  sender: 'rafal_lewandowski@outlook.com'
