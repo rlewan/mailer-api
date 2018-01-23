@@ -12,6 +12,10 @@ mainClassName = 'com.github.rlewan.mailer.Application'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+compileJava {
+  options.compilerArgs << '-parameters'
+}
+
 def springBootVersion = plugins.getPlugin('org.springframework.boot').class.package.implementationVersion
 
 repositories {
@@ -19,12 +23,15 @@ repositories {
 }
 
 def versions = [
-  springfoxSwagger: '2.7.0'
+  springfoxSwagger: '2.7.0',
+  jackson: dependencyManagement.importedProperties['jackson.version'],
 ]
 
 dependencies {
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
+
+  compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: versions.jackson
 
   compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
   compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
