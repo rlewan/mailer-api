@@ -1,2 +1,2 @@
-# mailer-backend
-Mailer backend service
+# mailer-api
+Mailer api service
