@@ -16,13 +16,13 @@ import javax.validation.Valid;
 
 @Api
 @RestController
-@RequestMapping("/mails")
-public class MailsController {
+@RequestMapping("/emails")
+public class EmailsController {
 
     private final EmailService emailService;
 
     @Autowired
-    public MailsController(EmailService emailService) {
+    public EmailsController(EmailService emailService) {
         this.emailService = emailService;
     }
 

@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MailsControllerTest {
+public class EmailsControllerIntegrationTest {
 
     @Autowired
     private MockMvc webClient;
@@ -29,7 +29,7 @@ public class MailsControllerTest {
     @Test
     public void sendEmailShouldRespondWith422WhenRequestEntityIsInvalid() throws Exception {
         webClient
-            .perform(post("/mails")
+            .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content("{ }"))
             .andExpect(status().isUnprocessableEntity());
@@ -38,7 +38,7 @@ public class MailsControllerTest {
     @Test
     public void sendEmailShouldRespondWith400WhenRequestEntityIsNotProvided() throws Exception {
         webClient
-            .perform(post("/mails")
+            .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(status().isBadRequest());
     }
