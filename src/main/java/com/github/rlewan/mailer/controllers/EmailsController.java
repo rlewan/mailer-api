@@ -15,7 +15,11 @@ import javax.validation.Valid;
 
 @Api
 @RestController
-@RequestMapping("/emails")
+@RequestMapping(
+    value = "/emails",
+    consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+    produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+)
 public class EmailsController {
 
     private final EmailService emailService;
@@ -25,7 +29,7 @@ public class EmailsController {
         this.emailService = emailService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping
     public SendEmailResponse sendEmail(@Valid @RequestBody SendEmailRequest request) {
         emailService.sendEmail(
             "rafal_lewandowski@outlook.com",
