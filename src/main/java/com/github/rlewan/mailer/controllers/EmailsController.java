@@ -1,7 +1,6 @@
 package com.github.rlewan.mailer.controllers;
 
-import com.github.rlewan.mailer.emailsenders.EmailSender;
-import com.github.rlewan.mailer.emailsenders.EmailService;
+import com.github.rlewan.mailer.services.EmailService;
 import com.github.rlewan.mailer.model.SendEmailRequest;
 import com.github.rlewan.mailer.model.SendEmailResponse;
 import io.swagger.annotations.Api;

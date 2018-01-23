@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.emailsenders;
+package com.github.rlewan.mailer.services.emailsenders;
 
 public interface EmailSender {
 

@@ -1,5 +1,6 @@
-package com.github.rlewan.mailer.emailsenders;
+package com.github.rlewan.mailer.services;
 
+import com.github.rlewan.mailer.services.emailsenders.EmailSender;
 import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
