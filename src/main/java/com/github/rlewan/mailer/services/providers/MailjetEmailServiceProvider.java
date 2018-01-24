@@ -28,7 +28,6 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
         JSONObject message = new JSONObject();
         message.put(Emailv31.Message.FROM, new JSONObject()
             .put(Emailv31.Message.EMAIL, sender)
-            .put(Emailv31.Message.NAME, "Rafał Lewandowski")
         )
             .put(Emailv31.Message.SUBJECT, subject)
             .put(Emailv31.Message.TEXTPART, text)
