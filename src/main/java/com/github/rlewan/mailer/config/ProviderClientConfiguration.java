@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.providers;
+package com.github.rlewan.mailer.config;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;

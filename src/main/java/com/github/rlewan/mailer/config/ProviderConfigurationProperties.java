@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.providers;
+package com.github.rlewan.mailer.config;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
