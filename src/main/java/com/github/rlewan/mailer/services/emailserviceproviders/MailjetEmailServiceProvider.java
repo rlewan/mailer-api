@@ -1,8 +1,10 @@
 package com.github.rlewan.mailer.services.emailserviceproviders;
 
+import com.github.rlewan.mailer.services.ProviderResponseVerifier;
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Emailv31;
@@ -14,6 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier("secondaryEmailServiceProvider")
 public class MailjetEmailServiceProvider implements EmailServiceProvider {
+
+    private final ProviderResponseVerifier providerResponseVerifier;
+
+    public MailjetEmailServiceProvider(ProviderResponseVerifier providerResponseVerifier) {
+        this.providerResponseVerifier = providerResponseVerifier;
+    }
 
     @Override
     public void sendEmail(String sender, String recipient, String subject, String text) {
@@ -33,7 +41,8 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
         MailjetRequest email = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
 
         try {
-            client.post(email);
+            MailjetResponse response = client.post(email);
+            providerResponseVerifier.assertResponseIsSuccessful(response.getStatus());
         } catch (MailjetException | MailjetSocketTimeoutException e) {
             throw new RuntimeException(e);
         }

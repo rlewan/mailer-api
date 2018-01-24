@@ -1,5 +1,6 @@
 package com.github.rlewan.mailer.services.emailserviceproviders;
 
+import com.github.rlewan.mailer.services.ProviderResponseVerifier;
 import com.sendgrid.Content;
 import com.sendgrid.Email;
 import com.sendgrid.Mail;
@@ -16,6 +17,12 @@ import java.io.IOException;
 @Qualifier("primaryEmailServiceProvider")
 public class SendgridEmailServiceProvider implements EmailServiceProvider {
 
+    private final ProviderResponseVerifier providerResponseVerifier;
+
+    public SendgridEmailServiceProvider(ProviderResponseVerifier providerResponseVerifier) {
+        this.providerResponseVerifier = providerResponseVerifier;
+    }
+
     @Override
     public void sendEmail(String sender, String recipient, String subject, String text) {
         Email from = new Email(sender);
@@ -30,9 +37,7 @@ public class SendgridEmailServiceProvider implements EmailServiceProvider {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
+            providerResponseVerifier.assertResponseIsSuccessful(response.getStatusCode());
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
