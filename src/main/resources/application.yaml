@@ -1,5 +1,5 @@
 server:
-  port: 4550
+  port: ${PORT:4550}
 
 mailer:
   from_address: 'rafal_lewandowski@outlook.com'
