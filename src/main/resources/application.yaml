@@ -3,3 +3,8 @@ server:
 
 mailer:
   from_address: 'rafal_lewandowski@outlook.com'
+
+provider-configuration:
+  sendgrid-api-key: '${SENDGRID_API_KEY}'
+  mj-api-key: '${MJ_API_KEY_PUBLIC}'
+  mj-api-secret: '${MJ_API_KEY_PRIVATE}'

@@ -10,17 +10,17 @@ import org.springframework.context.annotation.Configuration;
 public class ProviderClientConfiguration {
 
     @Bean
-    public MailjetClient mailjetClient() {
+    public MailjetClient mailjetClient(ProviderConfigurationProperties properties) {
         return new MailjetClient(
-            System.getenv("MJ_APIKEY_PUBLIC"),
-            System.getenv("MJ_APIKEY_PRIVATE"),
+            properties.getMjApiKey(),
+            properties.getMjApiSecret(),
             new ClientOptions("v3.1")
         );
     }
 
     @Bean
-    public SendGrid sendGrid() {
-        return new SendGrid(System.getenv("SENDGRID_API_KEY"));
+    public SendGrid sendGrid(ProviderConfigurationProperties properties) {
+        return new SendGrid(properties.getSendgridApiKey());
     }
 
 }
