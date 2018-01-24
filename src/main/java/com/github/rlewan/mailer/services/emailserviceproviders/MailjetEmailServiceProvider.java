@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class MailjetEmailServiceProvider implements EmailServiceProvider {
 
     @Override
-    public int sendEmail(String sender, String recipient, String subject, String text) {
+    public int sendEmail(String sender, String recipient, String subject, String text) throws EmailServiceProviderException {
         MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3.1"));
 
         JSONObject message = new JSONObject();

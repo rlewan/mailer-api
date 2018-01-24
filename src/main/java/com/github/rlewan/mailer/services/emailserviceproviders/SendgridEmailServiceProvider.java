@@ -17,7 +17,7 @@ import java.io.IOException;
 public class SendgridEmailServiceProvider implements EmailServiceProvider {
 
     @Override
-    public int sendEmail(String sender, String recipient, String subject, String text) {
+    public int sendEmail(String sender, String recipient, String subject, String text) throws EmailServiceProviderException {
         Email from = new Email(sender);
         Email to = new Email(recipient);
         Content content = new Content("text/plain", text);
