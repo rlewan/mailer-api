@@ -4,8 +4,6 @@ import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.github.rlewan.mailer.model.SendEmailRequest;
 import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.providers.EmailServiceProvider;
-import com.github.rlewan.mailer.services.providers.EmailServiceProviderException;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -15,8 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -39,12 +35,6 @@ public class EmailSenderIntegrationTest {
 
     @Autowired
     private EmailSender emailSender;
-
-    @Before
-    public void beforeEachTest() {
-        when(request.getSubject()).thenReturn(Optional.empty());
-        when(request.getContent()).thenReturn(Optional.empty());
-    }
 
     @Test
     public void shouldReturnAcceptedResponseWhenPrimaryProviderSucceeds() {

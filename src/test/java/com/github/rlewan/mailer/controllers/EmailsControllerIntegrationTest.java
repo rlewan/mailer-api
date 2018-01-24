@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EmailsControllerIntegrationTest {
 
-    private static final String VALID_REQUEST_BODY = "{ \"recipient\": \"user@mail.com\" }";
+    private static final String VALID_REQUEST_BODY = "{ \"recipient\": \"user@mail.com\", \"subject\": \"Subject\", \"content\": \"Content\" }";
     private static final String INVALID_REQUEST_BODY = "{ }";
 
     @Autowired

@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.util.Optional;
-
 @ApiModel(description = "JSON body of the send email request")
 public class SendEmailRequest {
 
@@ -20,13 +18,17 @@ public class SendEmailRequest {
     )
     private final String recipient;
 
+    @NotBlank
     @ApiModelProperty(
+        required = true,
         example = "Greetings from the Caribbean",
         position = 2
     )
     private final String subject;
 
+    @NotBlank
     @ApiModelProperty(
+        required = true,
         example = "We're having a great time here!",
         position = 3
     )
@@ -42,12 +44,12 @@ public class SendEmailRequest {
         return recipient;
     }
 
-    public Optional<String> getSubject() {
-        return Optional.ofNullable(subject);
+    public String getSubject() {
+        return subject;
     }
 
-    public Optional<String> getContent() {
-        return Optional.ofNullable(content);
+    public String getContent() {
+        return content;
     }
 
 }
