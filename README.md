@@ -18,7 +18,7 @@ Service is integrated with two email API providers, [SendGrid](https://sendgrid.
 Due to the limited amount of time I had I did not manage to implement a separate frontend service. However, the application uses [SpringFox](http://springfox.github.io/springfox/) to document exposed API endpoint. Apart from the documentation itself, SpringFox provides a sleek UI which allows to send requests to documented endpoints, so it is possible to easily send requests to the API.
 
 The application is deployed on Heroku:
-- [https://rlewan-mailer-api.herokuapp.com/swagger-ui.html](https://rlewan-mailer-api.herokuapp.com/swagger-ui.html) - the API documentation page,
+- [https://rlewan-mailer-api.herokuapp.com/swagger-ui.html](https://rlewan-mailer-api.herokuapp.com/swagger-ui.html#!/emails45controller/sendEmailUsingPOST) - the API documentation page,
 - [https://rlewan-mailer-api.herokuapp.com/emails](https://rlewan-mailer-api.herokuapp.com/emails) - the API endpoint itself.
 
 Since Heroku free plan dynos are not exactly speed demons, I did experience some timeout failures from Hystrix, what effectively caused failure response being returned to the user even though the email was sent eventually. I increased default Hystrix timeouts from 500 to 2000 milliseconds to mitigate this, so hopefully that problem should go away.    
