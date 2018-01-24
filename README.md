@@ -27,8 +27,8 @@ Since Heroku free plan dynos are not exactly speed demons, I did experience some
 
 ### If I had more time...
 
-I would provide a separate frontend service, even though it would be quite simple. Probably a Node.js/Express application with a form and a confirmation page. I admit HTML/CSS are not among my top skills.
+I would provide a separate frontend service, even though it would be quite simple and plain in appearance. Probably a Node.js/Express application with a form and a confirmation page. I admit HTML, CSS and client-side frameworks are not among my top skills.
 
-I would also provide health checks for downstream email API provider services. The application exposes a [`/health`](https://rlewan-mailer-api.herokuapp.com/health) endpoint (among other things) thanks to [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready), but it's nothing in there by default on this setup. Spring provides a [convenient way](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-health) of doing this, would have to play around with API clients provided by SendGrid and Mailjet.
+I would also provide health checks for downstream email API provider services. The application exposes a [`/health`](https://rlewan-mailer-api.herokuapp.com/health) endpoint (among other things) thanks to [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready), but it's nothing in there by default on this setup. Spring provides a [convenient way](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-health) of doing this, would have to play around with API clients provided by SendGrid and Mailjet to know how to retrieve their status.
 
 Another thing is that the application is open to the public at the moment, anyone can call the endpoint. I would add configure API key checking in the application. API key would have to be sent as an `Authorization` header on each call.
