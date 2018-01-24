@@ -20,7 +20,7 @@ public class EmailSender {
 
     @Autowired
     public EmailSender(
-        @Value("${mailer.from_address}") String fromAddress,
+        @Value("${mailer.from-address}") String fromAddress,
         ProviderResponseVerifier providerResponseVerifier,
         @Qualifier("primaryEmailServiceProvider") EmailServiceProvider primaryEmailServiceProvider,
         @Qualifier("secondaryEmailServiceProvider") EmailServiceProvider secondaryEmailServiceProvider

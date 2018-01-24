@@ -2,7 +2,7 @@ server:
   port: ${PORT:4550}
 
 mailer:
-  from_address: 'rafal_lewandowski@outlook.com'
+  from-address: 'rafal_lewandowski@outlook.com'
 
 provider-configuration:
   sendgrid-api-key: '${SENDGRID_API_KEY}'
