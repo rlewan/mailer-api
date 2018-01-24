@@ -1,5 +1,7 @@
 package com.github.rlewan.mailer.controllers;
 
+import com.github.rlewan.mailer.model.SendEmailRequest;
+import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.EmailSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,6 +45,16 @@ public class EmailsControllerIntegrationTest {
             .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void sendEmailShouldRespondWith202WhenRequestIsProcessedSuccessfully() throws Exception {
+        given(emailSender.sendEmail(any(SendEmailRequest.class))).willReturn(SendEmailResponse.ACCEPTED);
+        webClient
+            .perform(post("/emails")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content("{ \"recipient\": \"user@mail.com\" }"))
+            .andExpect(status().isAccepted());
     }
 
 }

@@ -44,7 +44,7 @@ public class EmailSender {
             request.getContent()
         );
         providerResponseVerifier.assertResponseIsSuccessful(providerResponseCode);
-        return new SendEmailResponse(providerResponseCode, "Sending successful");
+        return SendEmailResponse.ACCEPTED;
     }
 
     @SuppressWarnings("unused")

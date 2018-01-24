@@ -1,6 +1,11 @@
 package com.github.rlewan.mailer.model;
 
+import org.springframework.http.HttpStatus;
+
 public class SendEmailResponse {
+
+    public static final SendEmailResponse ACCEPTED =
+        new SendEmailResponse(HttpStatus.ACCEPTED.value(), "Your request has been dispatched");
 
     private final Integer status;
     private final String message;
