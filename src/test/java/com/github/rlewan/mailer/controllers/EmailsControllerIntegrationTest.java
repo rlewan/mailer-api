@@ -1,5 +1,6 @@
 package com.github.rlewan.mailer.controllers;
 
+import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.github.rlewan.mailer.model.SendEmailRequest;
 import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.EmailSender;
@@ -14,8 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,12 +50,22 @@ public class EmailsControllerIntegrationTest {
 
     @Test
     public void sendEmailShouldRespondWith202WhenRequestIsProcessedSuccessfully() throws Exception {
-        given(emailSender.sendEmail(any(SendEmailRequest.class))).willReturn(SendEmailResponse.ACCEPTED);
+        when(emailSender.sendEmail(any(SendEmailRequest.class))).thenReturn(SendEmailResponse.ACCEPTED);
         webClient
             .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content("{ \"recipient\": \"user@mail.com\" }"))
             .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void sendEmailShouldRespondWith503EmailSenderThrowsServiceUnavailable() throws Exception {
+        when(emailSender.sendEmail(any(SendEmailRequest.class))).thenThrow(new ServiceUnavailableException());
+        webClient
+            .perform(post("/emails")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content("{ \"recipient\": \"user@mail.com\" }"))
+            .andExpect(status().isServiceUnavailable());
     }
 
 }
