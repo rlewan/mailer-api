@@ -1,10 +1,9 @@
 package com.github.rlewan.mailer.services;
 
-import com.github.rlewan.mailer.services.emailserviceproviders.EmailServiceProviderException;
+import com.github.rlewan.mailer.services.providers.EmailServiceProviderException;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class ProviderResponseVerifierTest {

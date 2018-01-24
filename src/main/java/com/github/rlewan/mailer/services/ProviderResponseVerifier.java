@@ -1,6 +1,6 @@
 package com.github.rlewan.mailer.services;
 
-import com.github.rlewan.mailer.services.emailserviceproviders.EmailServiceProviderException;
+import com.github.rlewan.mailer.services.providers.EmailServiceProviderException;
 import org.springframework.stereotype.Service;
 
 @Service

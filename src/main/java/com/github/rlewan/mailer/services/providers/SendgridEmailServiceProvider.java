@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.emailserviceproviders;
+package com.github.rlewan.mailer.services.providers;
 
 import com.sendgrid.Content;
 import com.sendgrid.Email;

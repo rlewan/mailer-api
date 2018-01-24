@@ -1,4 +1,4 @@
-package com.github.rlewan.mailer.services.emailserviceproviders;
+package com.github.rlewan.mailer.services.providers;
 
 /**
  * An abstraction for different email sending API providers.
