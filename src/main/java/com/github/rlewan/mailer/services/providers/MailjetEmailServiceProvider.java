@@ -8,6 +8,8 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier("secondaryEmailServiceProvider")
 public class MailjetEmailServiceProvider implements EmailServiceProvider {
+
+    private static final Logger log = LoggerFactory.getLogger(MailjetEmailServiceProvider.class);
 
     private final MailjetClient mailjetClient;
 
@@ -41,6 +45,7 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
             MailjetResponse response = mailjetClient.post(email);
             return response.getStatus();
         } catch (MailjetException | MailjetSocketTimeoutException e) {
+            log.error("An error occurred while sending via Mailjet", e);
             throw new EmailServiceProviderException(e);
         }
     }

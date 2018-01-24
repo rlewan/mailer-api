@@ -7,6 +7,8 @@ import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.io.IOException;
 @Service
 @Qualifier("primaryEmailServiceProvider")
 public class SendgridEmailServiceProvider implements EmailServiceProvider {
+
+    private static final Logger log = LoggerFactory.getLogger(SendgridEmailServiceProvider.class);
 
     private final SendGrid sendGrid;
 
@@ -38,8 +42,9 @@ public class SendgridEmailServiceProvider implements EmailServiceProvider {
             request.setBody(mail.build());
             Response response = sendGrid.api(request);
             return response.getStatusCode();
-        } catch (IOException ex) {
-            throw new EmailServiceProviderException(ex);
+        } catch (IOException e) {
+            log.error("An error occurred while sending via Sendgrid", e);
+            throw new EmailServiceProviderException(e);
         }
     }
 

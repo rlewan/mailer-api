@@ -2,6 +2,7 @@ package com.github.rlewan.mailer.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -50,6 +51,15 @@ public class SendEmailRequest {
 
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("recipient", recipient)
+            .append("subject", subject)
+            .append("content", content)
+            .toString();
     }
 
 }

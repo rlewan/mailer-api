@@ -5,6 +5,8 @@ import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.providers.EmailServiceProvider;
 import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSender {
+
+    private static final Logger log = LoggerFactory.getLogger(EmailSender.class);
 
     private final String fromAddress;
     private final ProviderResponseVerifier providerResponseVerifier;
@@ -50,11 +54,13 @@ public class EmailSender {
     @SuppressWarnings("unused")
     @HystrixCommand(fallbackMethod = "reportServiceUnavailable")
     public SendEmailResponse sendEmailUsingSecondarySender(SendEmailRequest request) {
+        log.warn("Primary provider has failed, falling back to secondary one");
         return sendEmailViaEmailServiceProvider(secondaryEmailServiceProvider, request);
     }
 
     @SuppressWarnings("unused")
     public SendEmailResponse reportServiceUnavailable(SendEmailRequest request) {
+        log.error("All configured providers have failed to handle the request: {}", request);
         throw new ServiceUnavailableException();
     }
 
