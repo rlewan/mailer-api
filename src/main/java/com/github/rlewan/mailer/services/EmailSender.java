@@ -5,6 +5,7 @@ import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.providers.EmailServiceProvider;
 import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,14 @@ public class EmailSender {
         this.secondaryEmailServiceProvider = secondaryEmailServiceProvider;
     }
 
-    @HystrixCommand(fallbackMethod = "sendEmailUsingSecondarySender")
+    @HystrixCommand(
+        fallbackMethod = "sendEmailUsingSecondarySender",
+        commandProperties = {
+            @HystrixProperty(
+                name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"
+            )
+        }
+    )
     public SendEmailResponse sendEmail(SendEmailRequest request) {
         return sendEmailViaEmailServiceProvider(primaryEmailServiceProvider, request);
     }
@@ -52,7 +60,14 @@ public class EmailSender {
     }
 
     @SuppressWarnings("unused")
-    @HystrixCommand(fallbackMethod = "reportServiceUnavailable")
+    @HystrixCommand(
+        fallbackMethod = "reportServiceUnavailable",
+        commandProperties = {
+            @HystrixProperty(
+                name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"
+            )
+        }
+    )
     public SendEmailResponse sendEmailUsingSecondarySender(SendEmailRequest request) {
         log.warn("Primary provider has failed, falling back to secondary one");
         return sendEmailViaEmailServiceProvider(secondaryEmailServiceProvider, request);
