@@ -30,6 +30,7 @@ def versions = [
 
 dependencies {
   compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: versions.jackson
+  compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: versions.jackson
 
   compile group: 'com.mailjet', name: 'mailjet-client', version: '4.1.1'
 

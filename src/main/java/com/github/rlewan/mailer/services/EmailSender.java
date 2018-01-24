@@ -40,8 +40,8 @@ public class EmailSender {
         int providerResponseCode = provider.sendEmail(
             fromAddress,
             request.getRecipient(),
-            request.getSubject(),
-            request.getContent()
+            request.getSubject().orElse(""),
+            request.getContent().orElse("")
         );
         providerResponseVerifier.assertResponseIsSuccessful(providerResponseCode);
         return SendEmailResponse.ACCEPTED;

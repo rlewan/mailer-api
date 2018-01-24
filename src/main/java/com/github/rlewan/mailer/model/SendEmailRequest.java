@@ -3,6 +3,8 @@ package com.github.rlewan.mailer.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.util.Optional;
+
 public class SendEmailRequest {
 
     @Email
@@ -23,12 +25,12 @@ public class SendEmailRequest {
         return recipient;
     }
 
-    public String getSubject() {
-        return subject;
+    public Optional<String> getSubject() {
+        return Optional.ofNullable(subject);
     }
 
-    public String getContent() {
-        return content;
+    public Optional<String> getContent() {
+        return Optional.ofNullable(content);
     }
 
 }
