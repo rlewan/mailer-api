@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EmailsControllerIntegrationTest {
 
+    private static final String VALID_REQUEST_BODY = "{ \"recipient\": \"user@mail.com\" }";
+    private static final String INVALID_REQUEST_BODY = "{ }";
+
     @Autowired
     private MockMvc webClient;
 
@@ -36,7 +39,7 @@ public class EmailsControllerIntegrationTest {
         webClient
             .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content("{ }"))
+                .content(INVALID_REQUEST_BODY))
             .andExpect(status().isUnprocessableEntity());
     }
 
@@ -54,7 +57,7 @@ public class EmailsControllerIntegrationTest {
         webClient
             .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content("{ \"recipient\": \"user@mail.com\" }"))
+                .content(VALID_REQUEST_BODY))
             .andExpect(status().isAccepted());
     }
 
@@ -64,7 +67,7 @@ public class EmailsControllerIntegrationTest {
         webClient
             .perform(post("/emails")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content("{ \"recipient\": \"user@mail.com\" }"))
+                .content(VALID_REQUEST_BODY))
             .andExpect(status().isServiceUnavailable());
     }
 
