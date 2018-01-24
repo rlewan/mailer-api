@@ -1,6 +1,7 @@
 package com.github.rlewan.mailer.services;
 
 import com.github.rlewan.mailer.model.SendEmailRequest;
+import com.github.rlewan.mailer.model.SendEmailResponse;
 import com.github.rlewan.mailer.services.emailserviceproviders.EmailServiceProvider;
 import com.github.rlewan.mailer.exceptions.ServiceUnavailableException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -13,33 +14,47 @@ import org.springframework.stereotype.Service;
 public class EmailSender {
 
     private final String fromAddress;
+    private final ProviderResponseVerifier providerResponseVerifier;
     private final EmailServiceProvider primaryEmailServiceProvider;
     private final EmailServiceProvider secondaryEmailServiceProvider;
 
     @Autowired
     public EmailSender(
         @Value("${mailer.from_address}") String fromAddress,
+        ProviderResponseVerifier providerResponseVerifier,
         @Qualifier("primaryEmailServiceProvider") EmailServiceProvider primaryEmailServiceProvider,
         @Qualifier("secondaryEmailServiceProvider") EmailServiceProvider secondaryEmailServiceProvider
     ) {
         this.fromAddress = fromAddress;
+        this.providerResponseVerifier = providerResponseVerifier;
         this.primaryEmailServiceProvider = primaryEmailServiceProvider;
         this.secondaryEmailServiceProvider = secondaryEmailServiceProvider;
     }
 
     @HystrixCommand(fallbackMethod = "sendEmailUsingSecondarySender")
-    public void sendEmail(SendEmailRequest request) {
-        primaryEmailServiceProvider.sendEmail(fromAddress, request.getRecipient(), request.getSubject(), request.getContent());
+    public SendEmailResponse sendEmail(SendEmailRequest request) {
+        return sendEmailViaEmailServiceProvider(primaryEmailServiceProvider, request);
+    }
+
+    private SendEmailResponse sendEmailViaEmailServiceProvider(EmailServiceProvider provider, SendEmailRequest request) {
+        int providerResponseCode = provider.sendEmail(
+            fromAddress,
+            request.getRecipient(),
+            request.getSubject(),
+            request.getContent()
+        );
+        providerResponseVerifier.assertResponseIsSuccessful(providerResponseCode);
+        return new SendEmailResponse(providerResponseCode, "Sending successful");
     }
 
     @SuppressWarnings("unused")
     @HystrixCommand(fallbackMethod = "reportServiceUnavailable")
-    public void sendEmailUsingSecondarySender(SendEmailRequest request) {
-        secondaryEmailServiceProvider.sendEmail(fromAddress, request.getRecipient(), request.getSubject(), request.getContent());
+    public SendEmailResponse sendEmailUsingSecondarySender(SendEmailRequest request) {
+        return sendEmailViaEmailServiceProvider(secondaryEmailServiceProvider, request);
     }
 
     @SuppressWarnings("unused")
-    public void reportServiceUnavailable(SendEmailRequest request) {
+    public SendEmailResponse reportServiceUnavailable(SendEmailRequest request) {
         throw new ServiceUnavailableException();
     }
 

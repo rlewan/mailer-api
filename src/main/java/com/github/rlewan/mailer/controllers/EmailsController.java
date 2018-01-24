@@ -31,8 +31,7 @@ public class EmailsController {
 
     @PostMapping
     public SendEmailResponse sendEmail(@Valid @RequestBody SendEmailRequest request) {
-        emailSender.sendEmail(request);
-        return SendEmailResponse.SUCCESS;
+        return emailSender.sendEmail(request);
     }
 
 }

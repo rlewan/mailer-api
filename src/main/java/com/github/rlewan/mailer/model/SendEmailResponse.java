@@ -2,8 +2,6 @@ package com.github.rlewan.mailer.model;
 
 public class SendEmailResponse {
 
-    public static final SendEmailResponse SUCCESS = new SendEmailResponse(200, "Email sent successfully");
-
     private final Integer status;
     private final String message;
 

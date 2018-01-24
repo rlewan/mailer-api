@@ -1,6 +1,5 @@
 package com.github.rlewan.mailer.services.emailserviceproviders;
 
-import com.github.rlewan.mailer.services.ProviderResponseVerifier;
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
@@ -17,14 +16,8 @@ import org.springframework.stereotype.Service;
 @Qualifier("secondaryEmailServiceProvider")
 public class MailjetEmailServiceProvider implements EmailServiceProvider {
 
-    private final ProviderResponseVerifier providerResponseVerifier;
-
-    public MailjetEmailServiceProvider(ProviderResponseVerifier providerResponseVerifier) {
-        this.providerResponseVerifier = providerResponseVerifier;
-    }
-
     @Override
-    public void sendEmail(String sender, String recipient, String subject, String text) {
+    public int sendEmail(String sender, String recipient, String subject, String text) {
         MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3.1"));
 
         JSONObject message = new JSONObject();
@@ -42,7 +35,7 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
 
         try {
             MailjetResponse response = client.post(email);
-            providerResponseVerifier.assertResponseIsSuccessful(response.getStatus());
+            return response.getStatus();
         } catch (MailjetException | MailjetSocketTimeoutException e) {
             throw new RuntimeException(e);
         }
