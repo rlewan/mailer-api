@@ -8,11 +8,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -39,13 +40,12 @@ public class EmailsController {
         @ApiResponse(code = 202, message = "Your request has been dispatched for sending"),
         @ApiResponse(code = 400, message = "Your request was not well formed (perhaps body was missing?)"),
         @ApiResponse(code = 422, message = "The request was well formed, but did not pass validation"),
-        @ApiResponse(code = 503, message = "No downstream providers are available to handle your request at this moment")
+        @ApiResponse(code = 500, message = "An unexpected error we've failed to handle"),
+        @ApiResponse(code = 503, message = "Communication with all downstream providers has failed")
     })
-    public ResponseEntity<SendEmailResponse> sendEmail(@Valid @RequestBody SendEmailRequest request) {
-        SendEmailResponse response = emailSender.sendEmail(request);
-        return ResponseEntity
-            .accepted()
-            .body(response);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public SendEmailResponse sendEmail(@Valid @RequestBody SendEmailRequest request) {
+        return  emailSender.sendEmail(request);
     }
 
 }
