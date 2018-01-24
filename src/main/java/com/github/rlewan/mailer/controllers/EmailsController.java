@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.github.rlewan.mailer.controllers.EmailsController.V1_MEDIA_TYPE;
+
 @Api
 @RestController
 @RequestMapping(
     value = "/emails",
-    consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-    produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, V1_MEDIA_TYPE },
+    produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, V1_MEDIA_TYPE }
 )
 public class EmailsController {
+
+    public static final String V1_MEDIA_TYPE = "application/vnd.com.github.rlewan.mailer-api.v1+json;charset=UTF-8";
 
     private final EmailSender emailSender;
 
