@@ -37,7 +37,7 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
             MailjetResponse response = client.post(email);
             return response.getStatus();
         } catch (MailjetException | MailjetSocketTimeoutException e) {
-            throw new RuntimeException(e);
+            throw new EmailServiceProviderException(e);
         }
     }
 

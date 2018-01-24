@@ -32,7 +32,7 @@ public class SendgridEmailServiceProvider implements EmailServiceProvider {
             Response response = sg.api(request);
             return response.getStatusCode();
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new EmailServiceProviderException(ex);
         }
     }
 

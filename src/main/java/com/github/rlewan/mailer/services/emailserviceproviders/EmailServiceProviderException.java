@@ -6,4 +6,8 @@ public class EmailServiceProviderException extends RuntimeException {
         super("Provider responded with an unexpected response code of " + providerResponseCode);
     }
 
+    public EmailServiceProviderException(Throwable cause) {
+
+    }
+
 }
