@@ -32,3 +32,28 @@ I would provide a separate frontend service, even though it would be quite simpl
 I would also provide health checks for downstream email API provider services. The application exposes a [`/health`](https://rlewan-mailer-api.herokuapp.com/health) endpoint (among other things) thanks to [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready), but it's nothing in there by default on this setup. Spring provides a [convenient way](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-health) of doing this, would have to play around with API clients provided by SendGrid and Mailjet to know how to retrieve their status.
 
 Another thing is that the application is open to the public at the moment, anyone can call the endpoint. I would add configure API key checking in the application. API key would have to be sent as an `Authorization` header on each call.
+
+Test suite could probably be more complete too.
+
+## Running and developing
+
+The application provides a Gradle wrapper so the only you should need to run it are Java 8 and some environment variables.
+
+To test:
+
+```bash
+$ ./gradlew test
+```
+
+To run:
+
+```bash
+$ ./gradlew run
+```
+
+The environment variables you need exported are:
+- `SENDGRID_API_KEY`
+- `MJ_APIKEY_PUBLIC`
+- `MJ_APIKEY_PRIVATE`
+
+All are conveniently provided after setting up an account on those providers.
