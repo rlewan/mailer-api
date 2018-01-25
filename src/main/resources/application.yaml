@@ -5,6 +5,6 @@ mailer:
   from-address: 'rafal_lewandowski@outlook.com'
 
 provider-configuration:
-  sendgrid-api-key: '${SENDGRID_API_KEY}'
-  mj-api-key: '${MJ_APIKEY_PUBLIC}'
-  mj-api-secret: '${MJ_APIKEY_PRIVATE}'
+  sendgrid-api-key: '${SENDGRID_API_KEY:}'
+  mj-api-key: '${MJ_APIKEY_PUBLIC:}'
+  mj-api-secret: '${MJ_APIKEY_PRIVATE:}'
