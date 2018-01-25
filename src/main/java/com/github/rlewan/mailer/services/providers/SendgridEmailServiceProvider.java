@@ -30,22 +30,29 @@ public class SendgridEmailServiceProvider implements EmailServiceProvider {
 
     @Override
     public int sendEmail(String sender, String recipient, String subject, String text) throws EmailServiceProviderException {
-        Email from = new Email(sender);
-        Email to = new Email(recipient);
-        Content content = new Content("text/plain", text);
-        Mail mail = new Mail(from, subject, to, content);
-
-        Request request = new Request();
         try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
+            Request request = prepareSendgridRequest(sender, recipient, subject, text);
             Response response = sendGrid.api(request);
             return response.getStatusCode();
         } catch (IOException e) {
             log.error("An error occurred while sending via Sendgrid", e);
             throw new EmailServiceProviderException(e);
         }
+    }
+
+    private Request prepareSendgridRequest(String sender, String recipient, String subject, String text) throws IOException {
+        Email from = new Email(sender);
+        Email to = new Email(recipient);
+        Content content = new Content("text/plain", text);
+        Mail mail = new Mail(from, subject, to, content);
+
+        Request request = new Request();
+
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
+
+        return request;
     }
 
 }

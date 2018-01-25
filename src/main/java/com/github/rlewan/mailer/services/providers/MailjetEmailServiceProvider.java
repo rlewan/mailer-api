@@ -29,25 +29,28 @@ public class MailjetEmailServiceProvider implements EmailServiceProvider {
 
     @Override
     public int sendEmail(String sender, String recipient, String subject, String text) throws EmailServiceProviderException {
+        try {
+            MailjetRequest request = prepareMailjetRequest(sender, recipient, subject, text);
+            MailjetResponse response = mailjetClient.post(request);
+            return response.getStatus();
+        } catch (MailjetException | MailjetSocketTimeoutException e) {
+            log.error("An error occurred while sending via Mailjet", e);
+            throw new EmailServiceProviderException(e);
+        }
+    }
+
+    private MailjetRequest prepareMailjetRequest(String sender, String recipient, String subject, String text) {
         JSONObject message = new JSONObject();
+
         message.put(Emailv31.Message.FROM, new JSONObject()
-            .put(Emailv31.Message.EMAIL, sender)
-        )
+            .put(Emailv31.Message.EMAIL, sender))
             .put(Emailv31.Message.SUBJECT, subject)
             .put(Emailv31.Message.TEXTPART, text)
             .put(Emailv31.Message.TO, new JSONArray()
                 .put(new JSONObject()
                     .put(Emailv31.Message.EMAIL, recipient)));
 
-        MailjetRequest email = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
-
-        try {
-            MailjetResponse response = mailjetClient.post(email);
-            return response.getStatus();
-        } catch (MailjetException | MailjetSocketTimeoutException e) {
-            log.error("An error occurred while sending via Mailjet", e);
-            throw new EmailServiceProviderException(e);
-        }
+        return new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
     }
 
 }
